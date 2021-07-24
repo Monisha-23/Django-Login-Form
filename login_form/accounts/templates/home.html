@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+<title>Home</title>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+body {
+padding-top: 1em;
+}
+.container{
+    box-shadow:0px 10px 10px green
+}
+input{
+    background-color:black;
+    border:1px solid green;
+    color:white;
+    padding:5px;
+}
+input:focus{
+    box-shadow:5px 2px 2px green;
+}
+.messages{
+  margin-top:30px;
+  color:white;
+  font-style:courier;
+  letter-spacing:3px;
+}
+a:hover{
+  box-shadow:5px 2px 2px green;
+}
+</style>
+<body style="background-color:black;color:white">
+<div class="container" style="border:2px solid green;margin-top:1%;margin-bottom:3%;padding-top:3%;padding-bottom:5%;text-align:center;">
+<h1>Welcome <span style="background-color:green;padding:10px;color:white;border-radius:5px">{{name}}</span></h1>
+<h4>
+{% if users != None %}
+<h3 style="margin-top:30px;">List of users</h3>
+{% for user in users %}
+<a style="font-size:20px;margin-top:20px;text-decoration:none;background-color:green;padding:5px;color:white;border:1px solid green;"href="{% url "userdetail" user.id %}">{{user.username}}</a>
+{% endfor %}
+{% endif %}
+
+<div class="messages">
+{% if messages %}
+{% for message in messages %}
+  <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
+{% endfor %}
+{% endif %} 
+
+<form action="" method="post" style="margin-top:40px" nonvalidate>
+{% if form.non_feild.errors %}
+{% for error in form.non_feild.errors %}
+    <p style="color:red">{{error}}<p>
+{% endfor %}
+{% endif %}
+</div>
+
+{% for fm in form %}
+{{ fm.label_tag }} <br>{{fm}} {{fm.errors|striptags}}<br><br>
+{% endfor %}
+
+
+</form>
+</h4>
+<a href="{% url 'logout' %}" style="font-size:30px;padding:10px;text-decoration:none;color:white;border:1px solid green;margin-bottom:10px;">Logout</a>
+<br>
+</div>
+</body>
+</html>
